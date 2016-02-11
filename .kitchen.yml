@@ -1,0 +1,20 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["private_network", {ip: "192.168.35.35"}]
+
+provisioner:
+  name: chef_zero_scheduled_task
+
+platforms:
+  - name: windows-2012r2
+    driver:
+      customize:
+        memory: 2048
+
+suites:
+  - name: default
+    run_list:
+      - recipe[awesome_customers_windows::default]
+    attributes:
