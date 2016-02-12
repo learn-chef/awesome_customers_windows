@@ -1,9 +1,9 @@
 USE master;
 GO
--- Create the my_company database.
-CREATE DATABASE my_company;
+-- Create the learnchef database.
+CREATE DATABASE learnchef;
 GO
-USE my_company;
+USE learnchef;
 GO
 -- Create the customers table.
 CREATE TABLE customers(

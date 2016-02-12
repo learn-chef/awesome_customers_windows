@@ -7,3 +7,4 @@ long_description 'Installs/Configures awesome_customers_windows'
 version '0.1.0'
 
 depends 'sql_server', '~> 2.4.0'
+depends 'iis', '~> 4.1.6'
