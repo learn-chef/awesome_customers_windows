@@ -18,3 +18,5 @@ suites:
     run_list:
       - recipe[awesome_customers_windows::default]
     attributes:
+      sql_server:
+        sysadmins: ['Administrator', 'vagrant']
