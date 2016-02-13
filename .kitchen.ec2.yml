@@ -1,0 +1,54 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: learnchef
+  region: us-west-2
+  availability_zone: a
+  image_id: ami-ff4baf9f
+  subnet_id: subnet-eacb348f
+  instance_type: t2.medium
+  security_group_ids: ['sg-2d3b3b48']
+  retryable_tries: 120
+  associate_public_ip: true
+  tags:
+    X-Project: Learn Chef
+
+provisioner:
+  name: chef_zero_scheduled_task
+
+transport:
+  ssh_key: C:\Users\LearnChef\.ssh\learnchef.pem
+
+platforms:
+  - name: windows-2012r2
+    driver:
+      user_data: |
+        <powershell>
+        $logfile="C:\\Program Files\\Amazon\\Ec2ConfigService\\Logs\\kitchen-ec2.log"
+        #PS Remoting and & winrm.cmd basic config
+        Enable-PSRemoting -Force -SkipNetworkProfileCheck
+        & winrm.cmd set winrm/config '@{MaxTimeoutms="1800000"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxShellsPerUser="50"}' >> $logfile
+        #Server settings - support username/password login
+        & winrm.cmd set winrm/config/service/auth '@{Basic="true"}' >> $logfile
+        & winrm.cmd set winrm/config/service '@{AllowUnencrypted="true"}' >> $logfile
+        & winrm.cmd set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}' >> $logfile
+        #Firewall Config
+        & netsh advfirewall firewall set rule name="Windows Remote Management (HTTP-In)" profile=public protocol=tcp localport=5985 remoteip=localsubnet new remoteip=any  >> $logfile
+        #Set script execution to unrestricted
+        & Set-ExecutionPolicy Unrestricted -Force
+        </powershell>
+    transport:
+      username: Administrator
+
+suites:
+  - name: default
+    data_bags_path: "../../data_bags"
+    run_list:
+      - recipe[awesome_customers_windows::default]
+    provisioner:
+      encrypted_data_bag_secret_key_path: "../../.chef/encrypted_data_bag_secret"
+    attributes:
+      awesome_customers_windows:
+        secret_file: 'C:/Users/Administrator/AppData/Local/Temp/kitchen/encrypted_data_bag_secret'
