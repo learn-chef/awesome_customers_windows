@@ -1,0 +1,27 @@
+---
+driver:
+  name: hyperv
+  parent_vhd_folder: C:\Hyper-V
+  parent_vhd_name: WindowsServer2012R2.vhdx
+  vm_switch: ExternalSwitch
+  memory_startup_bytes: 2GB
+
+provisioner:
+  name: chef_zero_scheduled_task
+
+transport:
+  password: H24?6;H.QaV8JP2&
+
+platforms:
+  - name: windows-2012r2
+
+suites:
+  - name: default
+    data_bags_path: "../../data_bags"
+    run_list:
+      - recipe[awesome_customers_windows::default]
+    provisioner:
+      encrypted_data_bag_secret_key_path: "../../.chef/encrypted_data_bag_secret"
+    attributes:
+      awesome_customers_windows:
+        secret_file:  C:/Users/Administrator/AppData/Local/Temp/kitchen/encrypted_data_bag_secret
