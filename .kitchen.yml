@@ -15,13 +15,9 @@ platforms:
 
 suites:
   - name: default
-    data_bags_path: "../../data_bags"
     run_list:
       - recipe[awesome_customers_windows::default]
-    provisioner:
-      encrypted_data_bag_secret_key_path: "../../.chef/encrypted_data_bag_secret"
     attributes:
-      awesome_customers_windows:
-        secret_file: 'C:/Users/vagrant/AppData/Local/Temp/kitchen/encrypted_data_bag_secret'
       sql_server:
         sysadmins: ['Administrator', 'vagrant']
+        server_sa_password: 'SQL_sa_pa$$w0rd'
