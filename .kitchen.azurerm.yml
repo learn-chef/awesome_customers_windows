@@ -8,7 +8,7 @@ driver_config:
   machine_size: "Standard_D4"
 
 provisioner:
-  name: chef_zero_scheduled_task
+  name: chef_zero
 
 platforms:
   - name: windows-2012r2
@@ -17,6 +17,7 @@ platforms:
     transport:
       name: winrm
       username: azure
+      elevated: true
 
 suites:
   - name: default
