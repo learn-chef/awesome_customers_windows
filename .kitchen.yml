@@ -5,7 +5,11 @@ driver:
     - ["private_network", {ip: "192.168.35.35"}]
 
 provisioner:
-  name: chef_zero_scheduled_task
+  name: chef_zero
+
+transport:
+  name: winrm
+  elevated: true
 
 platforms:
   - name: windows-2012r2
