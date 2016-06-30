@@ -12,9 +12,11 @@ driver:
   associate_public_ip: true
 
 provisioner:
-  name: chef_zero_scheduled_task
+  name: chef_zero
 
 transport:
+  name: winrm
+  elevated: true
   ssh_key: C:\Users\LearnChef\.ssh\learnchef.pem
 
 platforms:

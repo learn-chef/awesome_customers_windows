@@ -7,9 +7,11 @@ driver:
   memory_startup_bytes: 2GB
 
 provisioner:
-  name: chef_zero_scheduled_task
+  name: chef_zero
 
 transport:
+  name: winrm
+  elevated: true
   password: H24?6;H.QaV8JP2&
 
 platforms:
