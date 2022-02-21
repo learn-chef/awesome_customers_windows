@@ -17,6 +17,7 @@ platforms:
     transport:
       name: winrm
       username: azure
+      elevated: true
 
 suites:
   - name: default
